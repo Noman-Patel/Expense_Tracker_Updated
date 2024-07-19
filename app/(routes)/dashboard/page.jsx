@@ -59,9 +59,9 @@ function Dashboard() {
 
   return (
     <div className=" p-5">
-      <h2 className="font-bold text-3xl">Hi,{user?.firstName} </h2>
+      <h2 className="font-bold text-3xl">Hi, {user?.firstName} </h2>
       <p className="text-gray-500">
-        Here's what happening with our money,Let manage your expense
+        Here's what's happening with our money. Let's manage your expenses.
       </p>
       <CardInfo budgetList={budgetList} />
       <div className="grid grid-cols-1 md:grid-cols-3 mt-10 gap-6">

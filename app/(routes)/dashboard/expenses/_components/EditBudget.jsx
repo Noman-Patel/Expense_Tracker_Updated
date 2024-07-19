@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { PenBox } from "lucide-react";
@@ -22,43 +22,40 @@ import { eq } from "drizzle-orm";
 import { toast } from "sonner";
 
 function EditBudget({ budgetInfo = {}, refershData }) {
+  const [emojiIcon, setEmojiIcon] = useState();
+  const [openEmojiPicker, setOpenEmojiPicker] = useState(false);
 
-    const[emojiIcon,setEmojiIcon] = useState();
-    const[openEmojiPicker,setOpenEmojiPicker] = useState(false);
+  const [name, setName] = useState();
+  const [amount, setamount] = useState();
 
-    const[name,setName] = useState();
-    const[amount,setAmount] = useState();
+  const { user } = useUser;
 
-    const {user} = useUser
+  const isButtonDisabled = !(name && amount && parseInt(amount, 10) >= 1);
 
-    const isButtonDisabled = !(name && amount && parseInt(amount, 10) >= 1);
-
-    useEffect(()=>{
-        if(budgetInfo){
-            setName(budgetInfo?.name);
-            setAmount(budgetInfo?.amount);
-            setEmojiIcon(budgetInfo?.icon);
-        }
-    },[budgetInfo])
-
-
-    
-
-    const onUpdateBudget= async() => {
-
-        const result =await db.update(Budgets).set({
-            name:name,
-            amount:amount,
-            icon:emojiIcon,
-        }).where(eq(Budgets.id,budgetInfo.id))
-        .returning();
-
-        if(result){
-            refershData()
-            toast("Budget updated!")
-        }
-
+  useEffect(() => {
+    if (budgetInfo) {
+      setName(budgetInfo?.name);
+      setamount(budgetInfo?.amount);
+      setEmojiIcon(budgetInfo?.icon);
     }
+  }, [budgetInfo]);
+
+  const onUpdateBudget = async () => {
+    const result = await db
+      .update(Budgets)
+      .set({
+        name: name,
+        amount: amount,
+        icon: emojiIcon,
+      })
+      .where(eq(Budgets.id, budgetInfo.id))
+      .returning();
+
+    if (result) {
+      refershData();
+      toast("Budget updated!");
+    }
+  };
 
   return (
     <div>
@@ -99,11 +96,11 @@ function EditBudget({ budgetInfo = {}, refershData }) {
                 </div>
 
                 <div className="mt-2">
-                  <h2 className="text-black font-medium my-1">Budget Amount</h2>
+                  <h2 className="text-black font-medium my-1">Budget amount</h2>
                   <Input
                     type="number"
                     defaultValue={budgetInfo.amount}
-                    onChange={(e) => setAmount(e.target.value)}
+                    onChange={(e) => setamount(e.target.value)}
                     min="1"
                   />
                 </div>

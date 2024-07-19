@@ -7,30 +7,32 @@ import moment from "moment";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
-function AddExpenses({budgetId,user,refreshData}) {
-    const[name,setName] = useState();
-    const[price,setPrice] = useState();
-    const[loading,setLoading] = useState(false)
+function AddExpenses({ budgetId, user, refreshData }) {
+  const [name, setName] = useState();
+  const [price, setPrice] = useState();
+  const [loading, setLoading] = useState(false);
 
-    const addNewExpense =async() =>{
-      setLoading(true)
-        const result = await db.insert(Expenses).values({
-            name:name,
-            price:price,
-            budgetId:budgetId,
-            createdAt:moment().format('MM/DD/YYYY')
-        }).returning({insertedId:Budgets.id})
+  const addNewExpense = async () => {
+    setLoading(true);
+    const result = await db
+      .insert(Expenses)
+      .values({
+        name: name,
+        price: price,
+        budgetId: budgetId,
+        createdAt: moment().format("MM/DD/YYYY"),
+      })
+      .returning({ insertedId: Budgets.id });
 
-
-        setPrice('')
-        setName('')
-        if(result){
-          setLoading(false)
-          refreshData()
-          toast('New Expenses Added!')
-        }
-        setLoading(false)
+    setPrice("");
+    setName("");
+    if (result) {
+      setLoading(false);
+      refreshData();
+      toast("New Expenses Added!");
     }
+    setLoading(false);
+  };
 
   return (
     <div className="border p-5 rounded-lg">
@@ -51,13 +53,12 @@ function AddExpenses({budgetId,user,refreshData}) {
           onChange={(e) => setPrice(e.target.value)}
         />
       </div>
-      <Button disabled={!(name&&price) || loading} 
-      onClick={() => addNewExpense()}
-      className="mt-3 w-full bg-customRed">
-        {
-          loading ? 
-          <Loader className="animate-spin"/> : 'Add New Expense'
-        }
+      <Button
+        disabled={!(name && price) || loading}
+        onClick={() => addNewExpense()}
+        className="mt-3 w-full bg-customRed"
+      >
+        {loading ? <Loader className="animate-spin" /> : "Add New Expense"}
       </Button>
     </div>
   );
