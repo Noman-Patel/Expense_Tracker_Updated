@@ -13,4 +13,3 @@ export default {
   }
 };
 
-console.log("Database URL:", process.env.NEXT_PUBLIC_DATABASE_URL);
