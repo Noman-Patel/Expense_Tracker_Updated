@@ -30,7 +30,7 @@ function BudgetList(){
     .orderBy(desc(Budgets.id));
 
     setBudgetList(result);
-        console.log(result);
+
       }
   return (
     <div className='mt-7'> 
