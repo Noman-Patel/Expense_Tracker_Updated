@@ -28,7 +28,7 @@ const Hero = () => {
         </div>
       </div>
       <video width={2000} height={7000} controls>
-          <source  src="/DEMO.mov" type="video/quicktime" />
+          <source  src="/DEMO.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
     </section>
